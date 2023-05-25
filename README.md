@@ -1,2 +1,2 @@
 # Bech32converter
-converter
+Javaを利用したBech32形式とNostrで用いられる各形式の変換を行う予定
