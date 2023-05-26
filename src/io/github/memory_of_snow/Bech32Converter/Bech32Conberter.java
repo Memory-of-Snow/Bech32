@@ -19,6 +19,11 @@ public class Bech32Conberter {
             'A','C','D','E','F','G','H','I','J','K','M','N','P','Q','R','S','T','U','V','W','X','Y','Z',
     };
 
+    static public enum AllowHumanReadablePart{
+        npub, nsec, note, NPUB, NSEC, NOTE;
+
+    }
+
     public String ConvertBech32toHex (String inputString){
 
         if(isValidBech32NostrKeyOrNote(inputString)){
@@ -28,7 +33,7 @@ public class Bech32Conberter {
         return "";
     }
 
-    static public boolean isValidBech32NostrKeyOrNote(String inputString ){
+    static public boolean isValidBech32NostrKeyOrNote(String inputString){
 
         if(inputString == null){
             log.log(Level.FINE,"input is null.");
@@ -98,8 +103,14 @@ public class Bech32Conberter {
     }
 
     private static boolean isAllowHumanReadablePart(String hrp) {
-        return hrp.equals("npub") || hrp.equals("nsec") || hrp.equals("note")
-                || hrp.equals("NPUB") || hrp.equals("NSEC") || hrp.equals("NOTE");
+
+        try {
+            AllowHumanReadablePart allowHRP = AllowHumanReadablePart.valueOf(hrp);
+        }catch (IllegalArgumentException e){
+            log.log(Level.FINE,"Invalid HumanReadablePart");
+            return false;
+        }
+        return true;
     }
 
 }

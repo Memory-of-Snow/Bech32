@@ -7,7 +7,13 @@ public class MinimalUse {
 
     public static void main(String[] args){
 
-        operationConfirmation();
+        final String publicKeyBech32String = "npub17x6pn22ukq3n5yw5x9prksdyyu6ww9jle2ckpqwdprh3ey8qhe6stnpujh";
+
+        if(Bech32Conberter.isValidBech32NostrKeyOrNote(publicKeyBech32String)){
+            System.out.println("OK.Valid Bech32 Strings.");
+        }else{
+            System.out.println("NG. Not Valid Bech32 strings" );
+        }
 
     }
 
