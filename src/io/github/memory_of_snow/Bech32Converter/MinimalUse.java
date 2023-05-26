@@ -1,15 +1,12 @@
 package io.github.memory_of_snow.Bech32Converter;
 
-import org.apache.commons.codec.binary.Hex;
-import org.bitcoinj.core.Bech32;
-
 public class MinimalUse {
 
     public static void main(String[] args){
 
         final String publicKeyBech32String = "npub17x6pn22ukq3n5yw5x9prksdyyu6ww9jle2ckpqwdprh3ey8qhe6stnpujh";
 
-        if(Bech32Conberter.isValidBech32NostrKeyOrNote(publicKeyBech32String)){
+        if(Bech32Converter.isValidBech32NostrKeyOrNote(publicKeyBech32String)){
             System.out.println("OK.Valid Bech32 Strings.");
         }else{
             System.out.println("NG. Not Valid Bech32 strings" );
@@ -17,6 +14,7 @@ public class MinimalUse {
 
     }
 
+    /*
     private static void operationConfirmation() {
         StringBuilder outputStringBuiler = new StringBuilder();
 
@@ -65,4 +63,7 @@ public class MinimalUse {
         System.out.println("encord = " + decordData.encoding);
         System.out.println("dataPart = " + new String(Hex.encodeHex(decordData.data)));
     }
+
+    :
+     */
 }

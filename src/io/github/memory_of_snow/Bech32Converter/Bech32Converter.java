@@ -3,14 +3,15 @@ package io.github.memory_of_snow.Bech32Converter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Bech32Conberter {
+public class Bech32Converter {
 
-    static private final Logger log = Logger.getLogger("Bech32Conberter");
-    static private final String publicKeyBech32String = "npub17x6pn22ukq3n5yw5x9prksdyyu6ww9jle2ckpqwdprh3ey8qhe6stnpujh";
+    static private final Logger log = Logger.getLogger("Bech32Converter");
+    //static private final String publicKeyBech32String = "npub17x6pn22ukq3n5yw5x9prksdyyu6ww9jle2ckpqwdprh3ey8qhe6stnpujh";
 
     //Bech32における人間の可読部(HRP:human-readable part)とデータ部分(data part)の区切り文字(separator)、常に"1"
 
-    // "1bio"は使用しない
+    /*
+    // 「1bio」は使用しない
     static private final char[] AllowCharacters = {
             '0','2','3','4','5','6','7','8','9',
             'a','c','d','e','f','g','h','i','j','k','m','n','p','q','r','s','t','u','v','w','x','y','z',
@@ -19,11 +20,10 @@ public class Bech32Conberter {
             'A','C','D','E','F','G','H','I','J','K','M','N','P','Q','R','S','T','U','V','W','X','Y','Z',
     };
 
-    static public enum AllowHumanReadablePart{
-        npub, nsec, note, NPUB, NSEC, NOTE;
+     */
 
-    }
 
+/*
     public String ConvertBech32toHex (String inputString){
 
         if(isValidBech32NostrKeyOrNote(inputString)){
@@ -32,6 +32,7 @@ public class Bech32Conberter {
 
         return "";
     }
+*/
 
     static public boolean isValidBech32NostrKeyOrNote(String inputString){
 
@@ -103,14 +104,9 @@ public class Bech32Conberter {
     }
 
     private static boolean isAllowHumanReadablePart(String hrp) {
+        return hrp.equals("npub") || hrp.equals("nsec") ||hrp.equals("note") ||
+                hrp.equals("NPUB") || hrp.equals("NSEC") ||hrp.equals("NOTE");
 
-        try {
-            AllowHumanReadablePart allowHRP = AllowHumanReadablePart.valueOf(hrp);
-        }catch (IllegalArgumentException e){
-            log.log(Level.FINE,"Invalid HumanReadablePart");
-            return false;
-        }
-        return true;
     }
 
 }
