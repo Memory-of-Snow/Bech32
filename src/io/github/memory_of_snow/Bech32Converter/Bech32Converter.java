@@ -1,11 +1,7 @@
 package io.github.memory_of_snow.Bech32Converter;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public class Bech32Converter {
 
-    static private final Logger log = Logger.getLogger("Bech32Converter");
     //static private final String publicKeyBech32String = "npub17x6pn22ukq3n5yw5x9prksdyyu6ww9jle2ckpqwdprh3ey8qhe6stnpujh";
 
     //Bech32における人間の可読部(HRP:human-readable part)とデータ部分(data part)の区切り文字(separator)、常に"1"
@@ -34,17 +30,16 @@ public class Bech32Converter {
     }
 */
 
-    static public boolean isValidBech32NostrKeyOrNote(String inputString){
+    static public boolean isValidBech32NostrKeyOrNote(String inputString) throws RuntimeException {
 
         if(inputString == null){
-            log.log(Level.FINE,"input is null.");
-            return false;
+            throw new RuntimeException("input string is null.");
         }
 
         //許容される最大は90文字
         if(inputString.length() > 90){
-            log.log(Level.FINE,"input is too long.");
-            return false;
+            throw new RuntimeException("input string is too long.");
+
         }
 
         //接頭語は指定のみ、次のセパレーター1は確定
@@ -54,18 +49,15 @@ public class Bech32Converter {
         String dataPart = inputString.substring(5);
 
         if(!isAllowHumanReadablePart(hrp)){
-            log.log(Level.FINE,"hrp is wrong.");
-            return false;
+            throw new RuntimeException("human-readable part is invalid.");
         }
 
         if(!separator.equals("1")){
-            log.log(Level.FINE,"separator is wrong.");
-            return false;
+            throw new RuntimeException("separator is not 1.");
         }
 
         if(dataPart.length() < 6){
-            log.log(Level.FINE,"dataPart is too short.");
-            return false;
+            throw new RuntimeException("data part is not too short.");
         }
 
         boolean lowCaseStrings = false;
@@ -76,15 +68,14 @@ public class Bech32Converter {
 
             char c = dataPart.charAt(i);
 
+            //文字の許される範囲は[33～126]
             if ( c < 33 || c > 126){
-                log.log(Level.FINE,"the value contains an invalid character.");
-                return false;
+                throw new RuntimeException("invalid letter in data part.");
             }
 
             // "1bio"は使用しない
             if ( c == '1' || c == 'b' || c == 'B' || c == 'i' || c == 'I' || c == 'o' || c == 'O') {
-                log.log(Level.FINE,"the value contains an invalid character.");
-                return false;
+                throw new RuntimeException("invalid letter in data part.");
             }
 
             if ( Character.isLowerCase(c) && Character.isLetter(c)){
@@ -95,9 +86,9 @@ public class Bech32Converter {
 
         }
 
+        //大文字か小文字統一が必要
         if(lowCaseStrings == upperCaseStrings){
-            log.log(Level.FINE,"the value contains mixed case.");
-            return false;
+            throw new RuntimeException("the value contains mixed case.");
         }
 
         return true;
